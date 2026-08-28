@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>piper_factory_demo</name>
+  <version>0.1.0</version>
+  <description>AgileX PiPER factory pick-and-place demo (ROS2 + MoveIt): pick pouches, stack into packing box. Digital-twin of the assembly-line station.</description>
+  <maintainer email="321972015+RobotGait@users.noreply.github.com">GaitOne</maintainer>
+  <license>MIT</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>moveit_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>shape_msgs</exec_depend>
+  <exec_depend>control_msgs</exec_depend>
+  <exec_depend>trajectory_msgs</exec_depend>
+  <exec_depend>tf_transformations</exec_depend>
+  <exec_depend>piper_with_gripper_moveit</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

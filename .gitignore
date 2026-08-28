@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+MUJOCO_LOG.TXT
+.compact_history/
+.claude/
+# ROS2 / colcon build artifacts
+build/
+install/
+log/

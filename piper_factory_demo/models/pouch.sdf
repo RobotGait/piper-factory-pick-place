@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!-- Pouch digital twin: 14.8 x 14.6 cm, thin rigid slab.
+     Client spec thicknesses: 0.17 / 0.35 / 0.80 mm. We model the 0.80 mm
+     case as a rigid slab (thin flexible film approximated as a thin plate
+     for the pick&place demo). Mass ~ film weight, small. -->
+<sdf version="1.6">
+  <model name="pouch">
+    <link name="link">
+      <inertial>
+        <mass>0.012</mass>
+        <inertia>
+          <ixx>2.1e-5</ixx><iyy>2.2e-5</iyy><izz>4.3e-5</izz>
+          <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <collision name="col">
+        <geometry>
+          <box><size>0.148 0.146 0.004</size></box>
+        </geometry>
+        <surface>
+          <friction><ode><mu>1.2</mu><mu2>1.2</mu2></ode></friction>
+          <contact><ode><kp>1e6</kp><kd>50</kd></ode></contact>
+        </surface>
+      </collision>
+      <visual name="vis">
+        <geometry>
+          <box><size>0.148 0.146 0.004</size></box>
+        </geometry>
+        <material>
+          <ambient>0.85 0.75 0.35 1</ambient>
+          <diffuse>0.90 0.80 0.40 1</diffuse>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

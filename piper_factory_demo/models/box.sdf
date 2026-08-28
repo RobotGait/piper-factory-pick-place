@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!-- Packing box digital twin: outer L 43 x W 35.5 x H 18.2 cm.
+     Open-top box built from 4 walls + floor (2 cm wall thickness).
+     Pouches get stacked inside toward the 25-layer target. Static. -->
+<sdf version="1.6">
+  <model name="packing_box">
+    <static>true</static>
+    <link name="link">
+      <!-- floor -->
+      <collision name="floor_col"><pose>0 0 0.01 0 0 0</pose>
+        <geometry><box><size>0.43 0.355 0.02</size></box></geometry></collision>
+      <visual name="floor_vis"><pose>0 0 0.01 0 0 0</pose>
+        <geometry><box><size>0.43 0.355 0.02</size></box></geometry>
+        <material><diffuse>0.55 0.35 0.18 1</diffuse></material></visual>
+      <!-- +X wall -->
+      <collision name="wx1_col"><pose>0.215 0 0.091 0 0 0</pose>
+        <geometry><box><size>0.02 0.355 0.182</size></box></geometry></collision>
+      <visual name="wx1_vis"><pose>0.215 0 0.091 0 0 0</pose>
+        <geometry><box><size>0.02 0.355 0.182</size></box></geometry>
+        <material><diffuse>0.60 0.40 0.20 1</diffuse></material></visual>
+      <!-- -X wall -->
+      <collision name="wx2_col"><pose>-0.215 0 0.091 0 0 0</pose>
+        <geometry><box><size>0.02 0.355 0.182</size></box></geometry></collision>
+      <visual name="wx2_vis"><pose>-0.215 0 0.091 0 0 0</pose>
+        <geometry><box><size>0.02 0.355 0.182</size></box></geometry>
+        <material><diffuse>0.60 0.40 0.20 1</diffuse></material></visual>
+      <!-- +Y wall -->
+      <collision name="wy1_col"><pose>0 0.1775 0.091 0 0 0</pose>
+        <geometry><box><size>0.43 0.02 0.182</size></box></geometry></collision>
+      <visual name="wy1_vis"><pose>0 0.1775 0.091 0 0 0</pose>
+        <geometry><box><size>0.43 0.02 0.182</size></box></geometry>
+        <material><diffuse>0.60 0.40 0.20 1</diffuse></material></visual>
+      <!-- -Y wall -->
+      <collision name="wy2_col"><pose>0 -0.1775 0.091 0 0 0</pose>
+        <geometry><box><size>0.43 0.02 0.182</size></box></geometry></collision>
+      <visual name="wy2_vis"><pose>0 -0.1775 0.091 0 0 0</pose>
+        <geometry><box><size>0.43 0.02 0.182</size></box></geometry>
+        <material><diffuse>0.60 0.40 0.20 1</diffuse></material></visual>
+    </link>
+  </model>
+</sdf>
