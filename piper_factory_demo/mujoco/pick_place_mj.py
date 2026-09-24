@@ -136,7 +136,7 @@ def build_model(n_pouches):
     Lx = POUCH["lx"]/2                 # match the plate exactly
     Ly = POUCH["ly"]/2
     bt, bh, bz = 0.003, 0.006, 0.006
-    green = [0.10, 0.90, 0.25, 1]
+    green = [0.95, 0.85, 0.10, 1]   # yellow target frames
     for si, (sx0, sy0, sdeg) in enumerate(SLOTS):
         sr = math.radians(sdeg)
         frame = wb.add_body(name=f"target_frame{si}", pos=[sx0, sy0, WORK_Z],
