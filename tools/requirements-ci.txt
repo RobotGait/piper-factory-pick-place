@@ -1,0 +1,6 @@
+# Dependencies for the CI smoke test (see .github/workflows/ci.yml).
+# The demo itself only needs mujoco + numpy; imageio writes the run video.
+mujoco>=3.2
+numpy
+imageio
+imageio-ffmpeg
