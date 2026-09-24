@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  static:
+    name: static checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Byte-compile every Python file
+        run: python -m compileall -q piper_factory_demo tools
+
+      - name: Validate SDF / package XML is well formed
+        run: |
+          python - <<'PY'
+          import glob, sys, xml.etree.ElementTree as ET
+          files = sorted(glob.glob("piper_factory_demo/**/*.sdf", recursive=True)
+                       + glob.glob("piper_factory_demo/**/*.xml", recursive=True))
+          if not files:
+              sys.exit("no XML/SDF files found - check the paths")
+          for f in files:
+              ET.parse(f)
+              print("ok", f)
+          PY
+
+  sim:
+    name: pick & place smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      # MuJoCo needs a GL backend. GitHub runners have no GPU, so render in
+      # software with OSMesa instead of EGL.
+      - name: Install OSMesa (software OpenGL)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends libosmesa6-dev
+
+      - name: Install Python dependencies
+        run: pip install "mujoco>=3.2" numpy imageio imageio-ffmpeg
+
+      # The arm model ships with AgileX, not with this repo.
+      - name: Fetch the PiPER description from upstream
+        run: |
+          git clone --depth 1 https://github.com/agilexrobotics/piper_ros.git piper_ros
+          test -f piper_ros/src/piper_description/mujoco_model/piper_description.xml
+
+      - name: Run the demo and check the arm hit its targets
+        env:
+          MUJOCO_GL: osmesa
+        run: python tools/ci_smoke.py --pouches 3 --place 1
+
+      - name: Upload the rendered run
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pick-place-run
+          path: ci_run.mp4
+          if-no-files-found: warn
